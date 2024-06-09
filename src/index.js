@@ -1,6 +1,7 @@
 //require('dotenv').config({path: './env'});  you want env vars to load at the start itself
 import dotenv from "dotenv";
 import connectDB from "./db/index.js"
+import { app } from "./app.js";
 
 dotenv.config({
     path: "./env" // see the changes in package.json files
