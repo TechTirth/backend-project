@@ -6,23 +6,23 @@ const videoSchema = new mongoose.Schema(
   {
     videoFile: {
       type: String,
-      rerquired: true,
+      required: true,
     },
     thunbnail: {
       type: String,
-      rerquired: true,
+      required: true,
     },
     title: {
       type: String,
-      rerquired: true,
+      required: true,
     },
     description: {
       type: String,
-      rerquired: true,
+      required: true,
     },
     duration: {
       type: Number,
-      rerquired: true,
+      required: true,
     },
     views: {
       type: Number,
@@ -33,14 +33,14 @@ const videoSchema = new mongoose.Schema(
       default: true,
     },
     owner: {
-      type: Schema.types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: User,
     },
   },
   { timestamps: true }
 );
 
-videoSchema.plugin(mongooseAggregatePaginate)
+videoSchema.plugin(mongooseAggregatePaginate);
 // since it is newly added we enable it this way
 // now you can perform industry graded complex queries
 

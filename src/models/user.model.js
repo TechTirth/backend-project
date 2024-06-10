@@ -28,14 +28,10 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String, // cloudinary url
-      required: true,
-    },
-    avatar: {
-      type: String, // cloudinary url
     },
     watchHistory: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Video",
       },
     ],
@@ -51,15 +47,9 @@ const userSchema = new mongoose.Schema(
 );
 
 // Encrypting the password before saving it.
-// can't use arrow func as we want to use this keyword
-// to access above objects of the schema. 
 userSchema.pre("save", async function(next){
-    // so problem here was if we change anything in the db 
-    // the userSchema.pre() would run everlytime so we are
-    // putting a check that only when the password is modified then only
-    // run the userSchema.pre()
-    // since it is a middleware we are returing the next() function
     if(!this.isModified("password")) return next();
+    
     this.password = await bcrypt.hash(this.password, 10) // 10 hash rounds 
     next()
 }) 
