@@ -7,7 +7,7 @@ import {ApiResponse} from "../utils/ApiResponse.js"
 const registerUser = asyncHandler(async (req, res) => {
     // get user details from frontend
     const {username, fullName, email, password} = req.body;
-    console.log(email);
+    // console.log(email);
 
 
     // validation - not empty
@@ -29,7 +29,7 @@ const registerUser = asyncHandler(async (req, res) => {
     // firstly we imported User model from the user.model.js file
     // it has method called findOne() --> return the first equal value.
 
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         // you can use operators with the help of dollar sign
         $or: [{ username }, { email }]
     })
@@ -42,10 +42,18 @@ const registerUser = asyncHandler(async (req, res) => {
 
     // check for images and avatar
 
+    // console.log(req.files) to see what it prints
+
     //given by multer, what it does? --> just like res.body
     const avatarLocalPath = req.files?.avatar[0]?.path
-    const coverImageLocalPath = re.files?.coverImage[0]?.path
+    // const coverImageLocalPath = req.files?.coverImage[0]?.path
     
+    let coverImageLocalPath;
+    if(req.files && Array.isArray(req.files.coverImage) && 
+    req.files.coverImage.length > 0){
+        coverImageLocalPath = req.files.coverImage[0].path
+    }
+
     if(!avatarLocalPath){
         throw new ApiError(400,"Avatar is required")
     }
